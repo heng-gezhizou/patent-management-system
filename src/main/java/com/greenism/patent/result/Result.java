@@ -10,14 +10,14 @@ public class Result<T> {
      * 成功时候的调用
      * */
     public static <T> Result<T> success(T data){
-        return new  Result<>(data);
+        return new  Result<T>(data);
     }
 
     /**
      * 失败时候的调用
      * */
-    public static <T> Result<T> error(String message){
-        return new  Result<>(message);
+    public static <T> Result<T> error(CodeMsg codeMsg){
+        return new  Result<T>(codeMsg);
     }
 
     private Result(T data) {
@@ -26,12 +26,12 @@ public class Result<T> {
         this.data = data;
     }
 
-    private Result(String message) {
-        if(message == null) {
+    private Result(CodeMsg codeMsg) {
+        if(codeMsg == null) {
             return;
         }
-        this.code = -1;
-        this.msg = message;
+        this.code = codeMsg.getCode();
+        this.msg = codeMsg.getMsg();
     }
 
     public int getCode() {

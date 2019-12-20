@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.greenism.patent.dao.CaseStatusDao">
+
+
+    <insert id="addCaseStatus" parameterType="com.greenism.patent.entity.CaseStatus">
+
+        insert into `case_status`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null ">
+                id,
+            </if>
+            <if test="caseId != null">
+                case_id,
+            </if>
+            <if test="applyNo != null">
+                apply_no,
+            </if>
+            <if test="applyDate != null">
+                apply_date,
+            </if>
+            <if test="inventionName != null">
+                invention_name,
+            </if>
+            <if test="modifierName != null">
+                modifier_name,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="isUse != null or isUse == 0">
+                is_use,
+            </if>
+            <if test="status != null or status == 0">
+                status,
+            </if>
+            <if test="inventorName != null">
+                inventor_name,
+            </if>
+        </trim>
+
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="caseId != null">
+                #{caseId,jdbcType=VARCHAR},
+            </if>
+            <if test="applyNo != null" >
+                #{applyNo,jdbcType=VARCHAR},
+            </if>
+            <if test="applyDate != null" >
+                #{applyDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="inventionName != null" >
+                #{inventionName,jdbcType=VARCHAR},
+            </if>
+            <if test="modifierName != null" >
+                #{modifierName,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null" >
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null" >
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isUse != null or isUse == 0" >
+                #{isUse,jdbcType=INTEGER},
+            </if>
+            <if test="status != null or status == 0" >
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="inventorName != null" >
+                #{inventorName,jdbcType=VARCHAR},
+            </if>
+        </trim>
+
+
+    </insert>
+</mapper>

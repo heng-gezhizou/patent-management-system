@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.greenism.patent.dao.CaseDao">
+
+    <sql id="Base_Column_List">
+        id,batch,case_id,apply_no,apply_date,tec_contact,apply_name,invention_name,law_status,patent_type,inventor_name,modifier_name,account_id,is_check,is_new,mark,update_time,create_time,is_use
+    </sql>
+    
+    <insert id="insertNewCase" parameterType="com.greenism.patent.entity.CaseInformation">
+        insert into case_information (batch,case_id,apply_no,apply_date,tec_contact,apply_name,invention_name,patent_type,inventor_name,is_check,is_new,mark,create_time,is_use)
+        values (#{batch},#{caseId},#{applyNo},#{applyDate},#{tecContact},#{applyName},#{inventionName},#{patentType},#{inventorName},#{isCheck},#{isNew},#{mark},#{createTime},#{isUse})
+    </insert>
+    <select id="getCaseInfoByCaseId" resultType="com.greenism.patent.entity.CaseInformation">
+        select id,batch,case_id,apply_no,apply_date,tec_contact,apply_name,invention_name,law_status,patent_type,inventor_name,modifier_name,account_id,is_check,is_new,mark,update_time,create_time,is_use
+        from case_information
+        where case_id = #{caseId} or apply_no = #{applyNo}
+    </select>
+    <insert id="addCase" parameterType="com.greenism.patent.entity.CaseInformation">
+
+        insert into case_information
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null">
+                `id`,
+            </if>
+            <if test="batch != null">
+                `batch`,
+            </if>
+            <if test="caseId != null">
+                `case_id`,
+            </if>
+            <if test="applyNo != null">
+                `apply_no`,
+            </if>
+            <if test="applyDate != null">
+                `apply_date`,
+            </if>
+            <if test="tecContact != null">
+                `tec_contact`,
+            </if>
+            <if test="applyName != null">
+                `apply_name`,
+            </if>
+            <if test="inventionName != null">
+                `invention_name`,
+            </if>
+            <if test="lawStatus != null">
+                `law_status`,
+            </if>
+            <if test="patentType != null">
+                `patent_type`,
+            </if>
+            <if test="inventorName != null">
+                `inventor_name`,
+            </if>
+            <if test="modifierName != null">
+                `modifier_name`,
+            </if>
+            <if test="accountId != null">
+                `account_id`,
+            </if>
+            <if test="isCheck != null or isCheck == 0">
+                `is_check`,
+            </if>
+            <if test="isNew != null or isNew == 0">
+                `is_new`,
+            </if>
+            <if test="mark != null">
+                `mark`,
+            </if>
+            <if test="updateTime != null">
+                `update_time`,
+            </if>
+            <if test="createTime != null">
+                `create_time`,
+            </if>
+            <if test="isUse != null or isUse == 0">
+                `is_use`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="batch != null">
+                #{batch,jdbcType=VARCHAR},
+            </if>
+            <if test="caseId != null">
+                #{caseId,jdbcType=VARCHAR},
+            </if>
+            <if test="applyNo != null">
+                #{applyNo,jdbcType=VARCHAR},
+            </if>
+            <if test="applyDate != null">
+                #{applyDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="tecContact != null">
+                #{tecContact,jdbcType=VARCHAR},
+            </if>
+            <if test="applyName != null">
+                #{applyName,jdbcType=VARCHAR},
+            </if>
+            <if test="inventionName != null">
+                #{inventionName,jdbcType=VARCHAR},
+            </if>
+            <if test="lawStatus != null">
+                #{lawStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="patentType != null">
+                #{patentType,jdbcType=VARCHAR},
+            </if>
+            <if test="inventorName != null">
+                #{inventorName,jdbcType=VARCHAR},
+            </if>
+            <if test="modifierName != null">
+                #{modifierName,jdbcType=VARCHAR},
+            </if>
+            <if test="accountId != null">
+                #{accountId,jdbcType=VARCHAR},
+            </if>
+            <if test="isCheck != null or isCheck == 0">
+                #{isCheck,jdbcType=INTEGER},
+            </if>
+            <if test="isNew != null or isNew == 0">
+                #{isNew,jdbcType=INTEGER},
+            </if>
+            <if test="mark != null">
+                #{mark,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isUse != null or isUse == 0">
+                #{isUse,jdbcType=INTEGER},
+            </if>
+        </trim>
+
+    </insert>
+    <select id="getAllCase" resultType="com.greenism.patent.entity.CaseInformation">
+        select
+        <include refid="Base_Column_List"/>
+        from case_information
+    </select>
+    <select id="getCaseByConditions" resultType="com.greenism.patent.entity.CaseInformation">
+        select
+        <include refid="Base_Column_List"/>
+        from case_information c
+        <where>
+            <if test="caseInformation.caseId != null">
+                AND c.case_id like concat('%',#{caseInformation.caseId},'%')
+            </if>
+            <if test="caseInformation.inventorName != null">
+                AND c.inventor_name like concat('%',#{caseInformation.inventorName},'%')
+            </if>
+            <if test="caseInformation.inventionName != null">
+                AND c.invention_name like concat('%',#{caseInformation.inventionName},'%')
+            </if>
+            <if test="caseInformation.applyNo != null">
+                AND c.apply_no like concat('%',#{caseInformation.applyNo},'%')
+            </if>
+            <if test="caseInformation.lawStatus != null">
+                AND c.law_status like concat('%',#{caseInformation.lawStatus},'%')
+            </if>
+        </where>
+        order by c.update_time
+    </select>
+</mapper>
